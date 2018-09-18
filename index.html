@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Scroll</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <style type="text/css">
+        * {
+            padding:0;
+            margin:0;
+        }
+        .spaceWaster{
+            width:100%;
+            height:1200px;
+        }
+        
+        .scrollTo {
+            background-color:#c9c9c9;
+            padding: 50px 0;
+            width:100%;
+            height:200px;
+        }
+        .animateH1 {
+            margin-left:30px;
+            font-size:12px;
+            opacity: .3;
+        }
+        
+        .animateP {
+            margin-left:30px;
+            font-size:8px;
+            opacity: .3;
+        }
+
+
+        </style>
+        <script>
+            $(document).ready(function (){
+                //Set boolean outside of scroller function
+                var animated = false;
+
+                //Scroller function
+                function scroller () {
+                    
+                    var elementTop = $(".scrollTo").offset().top;
+                    var elementBottom = elementTop + $(".scrollTo").outerHeight();
+
+                    var viewportTop = $(window).scrollTop();
+                    var viewportBottom = viewportTop + $(window).height();
+                    
+                    if (elementBottom < viewportBottom && elementTop > viewportTop && animated == false) {
+                        $(".animateH1").animate({
+                            opacity:"1",
+                            fontSize:"24px",
+                            }, 400);
+                        $(".animateP").animate({
+                            opacity:"1", 
+                            fontSize: "18px",
+                            }, 400);
+                        animated = true;
+                    }
+                    //If element is dissapearing 
+                    else if (elementBottom > viewportBottom && animated == true ||
+                             elementTop < viewportTop && animated == true) {
+                        $(".animateH1").animate({
+                            opacity:'.3',
+                            fontSize:'12px',
+                            }, 400);
+                        $(".animateP").animate({
+                            opacity:".3", 
+                            fontSize: "8px",
+                            }, 400);
+                        animated = false;
+
+                    }; //End if else
+
+                }; //End scroller function
+
+            //Call scroll function when user scrolls
+            $(document).on("scroll", scroller);
+
+            }); //End load function
+        </script>
+    </head>
+
+    <body>
+        <div class="spaceWaster"></div>
+        <div class="scrollTo">
+            <h1 class="animateH1">About</h1>
+            <p class="animateP">Lorem ipsum</p>
+        </div>
+        <div class="spaceWaster"></div>
+    </body>
+
+
+</html>
